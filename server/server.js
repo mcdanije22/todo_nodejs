@@ -1,6 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const Knex = require('Knex');
+
+
+const postgres = Knex({
+    client: 'pg',
+    connection: {
+      host : '127.0.0.1',
+      user : 'joshmcdaniel',
+      password : '',
+      database : 'todo_list'
+    }
+  });
+
+  
+
+
+  postgres.select('*').from('items').then(data=>console.log(data));
 
 const port = 3000;
 const app = express();
