@@ -3,8 +3,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const Knex = require('Knex');
 
+const list = require('./routes/list');
+const add = require('./routes/add')
 
-const postgres = Knex({
+const db = Knex({
     client: 'pg',
     connection: {
       host : '127.0.0.1',
@@ -14,10 +16,6 @@ const postgres = Knex({
     }
   });
 
-  
-
-
-  postgres.select('*').from('items').then(data=>console.log(data));
 
 const port = 3000;
 const app = express();
@@ -25,27 +23,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const db = [
-    {
-        id:123,
-        name:'josh',
-        age: 28
-    },
-    {
-        id:124, 
-        name:'john',
-        age:30
-    }
-]
-app.get('/', (req, res )=>{
-    res.send(db);
-})
-app.post('/add',(req, res)=>{
-    const {name, age} = req.body;
-    db.push({
-        name:name,
-        age:age
-    })
-})
+
+app.get('/', (req,res)=>{list.getList(req,res,db)})
+app.post('/add',(req,res)=>{add.addItem(req,res,db)});
 
 app.listen(port, ()=>console.log(`server running on port ${port}`));
