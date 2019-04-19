@@ -48,13 +48,31 @@ class App extends Component {
       }),
       headers:{'Content-Type':'application/json'}
     })
+    .then(res => res.json())
+    .then(data=>{
+      const newItem = data;
+      const newList = [...this.state.list, ...newItem]
+      console.log(newList)
+      this.setState({list:newList})
+    })
     this.clearForm();
+  }
+
+  onDelete=()=>{
+    fetch('http://localhost:3000/delete',
+    {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id: '70'})
+    })
   }
 
   render() {
     const {list} = this.state;
     const userList = list.map((item, i)=>{
-      return <li key={i} style={{listStyle:'none'}}>{item.item}</li>
+      return <li key={i} style={{listStyle:'none', fontSize:'2rem'}}>{item.item} <button type='submit' style={{fontSize:'2rem', border: '1px black solid'}} onClick={this.onDelete}>delete</button></li> 
     });
 
     return (

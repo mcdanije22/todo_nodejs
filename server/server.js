@@ -4,7 +4,8 @@ const cors = require('cors');
 const Knex = require('Knex');
 
 const list = require('./routes/list');
-const add = require('./routes/add')
+const add = require('./routes/add');
+const del = require('./routes/del');
 
 const db = Knex({
     client: 'pg',
@@ -26,5 +27,7 @@ app.use(bodyParser.json());
 
 app.get('/', (req,res)=>{list.getList(req,res,db)})
 app.post('/add',(req,res)=>{add.addItem(req,res,db)});
+app.delete('/delete',(req,res)=>{del.deleteItem(req,res,db)})
+
 
 app.listen(port, ()=>console.log(`server running on port ${port}`));
