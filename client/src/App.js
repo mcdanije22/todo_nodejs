@@ -58,21 +58,23 @@ class App extends Component {
     this.clearForm();
   }
 
-  onDelete=()=>{
+  onDelete=(e)=>{
+    const id = e.target.id
+    console.log(id)
     fetch('http://localhost:3000/delete',
     {
         method: "DELETE",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({id: '70'})
+        body:JSON.stringify({
+          id:id
+        }),
+        headers:{'Content-Type':'application/json'}
     })
   }
 
   render() {
     const {list} = this.state;
     const userList = list.map((item, i)=>{
-      return <li key={i} style={{listStyle:'none', fontSize:'2rem'}}>{item.item} <button type='submit' style={{fontSize:'2rem', border: '1px black solid'}} onClick={this.onDelete}>delete</button></li> 
+      return <li key={i} style={{listStyle:'none', fontSize:'2rem'}}>{item.item} {item.id} <button type='submit' id= {item.id} style={{fontSize:'2rem', border: '1px black solid'}} onClick={this.onDelete}>delete</button></li> 
     });
 
     return (

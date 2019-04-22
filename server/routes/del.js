@@ -1,7 +1,7 @@
 const deleteItem= (req,res,db)=>{
-    const {id} = req.params;
+    const {id} = req.body;
     db('items')
-    .where({id:'71'})
+    .where({id:id})
     .del()
     .then(res.json())
 }
