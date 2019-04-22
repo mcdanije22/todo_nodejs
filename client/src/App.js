@@ -22,6 +22,16 @@ class App extends Component {
     })
   }
 
+  // componentDidUpdate(){
+  //   fetch('http://localhost:3000')
+  //   .then(res=>res.json())
+  //   .then((data)=>{
+  //     this.setState({list:data}, ()=>{
+  //       console.log(this.state.list)
+  //     })
+  //   })
+  // }
+
   clearForm =()=>{
     this.setState({
       itemInput:'',
@@ -39,6 +49,9 @@ class App extends Component {
 
   onSubmit=(e)=>{
     const {itemInput, descriptionInput, ownerInput} =this.state;
+    if(itemInput ==='' || descriptionInput === '' || ownerInput ===''){
+      alert('input all fields')
+    } else{
     fetch('http://localhost:3000/add',{
       method:'POST',
       body:JSON.stringify({
@@ -55,20 +68,22 @@ class App extends Component {
       console.log(newList)
       this.setState({list:newList})
     })
-    this.clearForm();
+    .then(this.clearForm())
+  }
+    
   }
 
+
   onDelete=(e)=>{
-    const id = e.target.id
-    console.log(id)
-    fetch('http://localhost:3000/delete',
+    const id = e.target.id;
+    console.log(id);
+    fetch(`http://localhost:3000/delete/ ${id}`,
     {
-        method: "DELETE",
-        body:JSON.stringify({
-          id:id
-        }),
-        headers:{'Content-Type':'application/json'}
+        method: "DELETE" 
     })
+    const list = this.state.list;
+    const newList = list.filter(item => item.id != id);
+    this.setState({list:newList})
   }
 
   render() {

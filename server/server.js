@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 
 app.get('/', (req,res)=>{list.getList(req,res,db)})
 app.post('/add',(req,res)=>{add.addItem(req,res,db)});
-app.delete('/delete',(req,res)=>{del.deleteItem(req,res,db)})
+app.delete('/delete/:id',(req,res)=>{del.deleteItem(req,res,db)})
 
 
 app.listen(port, ()=>console.log(`server running on port ${port}`));
