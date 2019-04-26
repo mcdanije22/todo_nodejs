@@ -5,7 +5,6 @@ const deleteItem= (req,res,db)=>{
     .where({id:id})
     .del()
     .then(res.json())
-    // .then(console.log(id))
 }
 
 module.exports={
