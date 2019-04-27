@@ -7,6 +7,7 @@ import {
    Row,
    Col
    } from 'reactstrap';
+import { isString } from 'util';
 
 class App extends Component {
   constructor(props){
@@ -145,18 +146,6 @@ class App extends Component {
     this.setState({list:filteredList})
   }
 
-  showTasks = (e) =>{
-    axios.get('http://localhost:3000/list')
-    .then(res=>{
-      this.setState({list:res.data},()=>{
-        console.log(this.state.list)
-      })
-    });
-    const list = this.state.list;
-    // const filteredList = list.filter(item=> )
-  }
-
-
   render() {
     // const {list} = this.state;
     // const userList = list.map((item, i)=>{
@@ -166,10 +155,14 @@ class App extends Component {
 
     const {users,list} =this.state;
     const userList = users.map((user,i)=>{
-      return <ul key={i} name={user.name} style={{listStyle:'none', fontSize:'2rem'}}>{user.name}<Button onClick={this.showTasks} style={{marginLeft:'2rem'}}>Show Tasks</Button>
-     { list.map((item,i)=>{
-      return <li key ={i}>{item.item}</li>
-      })  }
+      return <ul key={i} name={user.name} style={{listStyle:'none', fontSize:'2rem'}}><h1>{user.name}'s Tasks:</h1>
+     { list.filter((listItem)=>{
+       return listItem.owner == user.name;
+     })
+     .map((listItem,i)=>{
+     return <li key ={i}>{listItem.item}<Button id={listItem.id} onClick={this.onDelete} style={{marginLeft:'2rem'}}>Delete</Button></li>
+      })  
+      }
       </ul>
     })
     return (
