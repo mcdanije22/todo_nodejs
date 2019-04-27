@@ -6,7 +6,7 @@ const Knex = require('Knex');
 const list = require('./routes/list');
 const add = require('./routes/add');
 const del = require('./routes/del');
-
+const userList = require('./routes/userList');
 const db = Knex({
     client: 'pg',
     connection: {
@@ -25,7 +25,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 
-app.get('/', (req,res)=>{list.getList(req,res,db)})
+app.get('/list', (req,res)=>{list.getList(req,res,db)})
+app.get('/', (req,res)=>{userList.getUsers(req,res,db)})
 app.post('/add',(req,res)=>{add.addItem(req,res,db)});
 app.delete('/delete/:id',(req,res)=>{del.deleteItem(req,res,db)})
 

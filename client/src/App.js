@@ -12,6 +12,7 @@ class App extends Component {
   constructor(props){
   super(props);
   this.state={
+    users:[],
     list:[],
     itemInput:'',
     descriptionInput:'',
@@ -20,23 +21,30 @@ class App extends Component {
 }
 
   componentDidMount(){
-    // fetch('http://localhost:3000')
-    // .then(res=>res.json())
-    // .then((data)=>{
-    //   this.setState({list:data}, ()=>{
-    //     console.log(this.state.list)
-    //   })
-    // })
-    axios.get('http://localhost:3000')
-    .then(res=>{
-      console.log(res)
-    })
+   
+    // axios.get('http://localhost:3000')
     // .then(res=>{
     //   this.setState({list:res.data},()=>{
     //     console.log(this.state.list)
     //   })
     // });
+
+    axios.get('http://localhost:3000')
+    .then(res=>{
+      this.setState({users:res.data},()=>{
+        console.log(this.state.users)
+      })
+    });
+
+    axios.get('http://localhost:3000/list')
+    .then(res=>{
+      this.setState({list:res.data},()=>{
+        console.log(this.state.list)
+      })
+    });
+    
   }
+  
 
 
     // componentDidUpdate(){
@@ -137,13 +145,33 @@ class App extends Component {
     this.setState({list:filteredList})
   }
 
+  showTasks = (e) =>{
+    axios.get('http://localhost:3000/list')
+    .then(res=>{
+      this.setState({list:res.data},()=>{
+        console.log(this.state.list)
+      })
+    });
+    const list = this.state.list;
+    // const filteredList = list.filter(item=> )
+  }
+
 
   render() {
-    const {list} = this.state;
-    const userList = list.map((item, i)=>{
-      return <li key={i} style={{listStyle:'none', fontSize:'2rem'}}>{item.item} {item.id}  <button type='submit' id= {item.id} style={{fontSize:'2rem', border: '1px black solid'}} onClick={this.onDelete}>delete</button></li> 
-    });
+    // const {list} = this.state;
+    // const userList = list.map((item, i)=>{
+    //   return <li key={i} style={{listStyle:'none', fontSize:'2rem'}}>{item.item} {item.id}  <button type='submit' id= {item.id} style={{fontSize:'2rem', border: '1px black solid'}} onClick={this.onDelete}>delete</button></li> 
+    // });
 
+
+    const {users,list} =this.state;
+    const userList = users.map((user,i)=>{
+      return <ul key={i} name={user.name} style={{listStyle:'none', fontSize:'2rem'}}>{user.name}<Button onClick={this.showTasks} style={{marginLeft:'2rem'}}>Show Tasks</Button>
+     { list.map((item,i)=>{
+      return <li key ={i}>{item.item}</li>
+      })  }
+      </ul>
+    })
     return (
       <Container>
       <div className="App">
@@ -187,9 +215,7 @@ class App extends Component {
       </Col>
       </Row>
       <Button type='submit' onClick={this.onSubmit} style={{fontSize:'2rem'}} color = 'success'>Add</Button>
-       <ul>
        {userList}
-       </ul>
       </div>
       </Container>
     );
