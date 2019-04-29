@@ -163,6 +163,17 @@ class App extends Component {
      return <li key ={i}>{listItem.item}<Button id={listItem.id} onClick={this.onDelete} style={{marginLeft:'2rem'}}>Delete</Button></li>
       })  
       }
+
+
+      {/* filter
+      <li>{
+        list.map((item,i)=>{
+          if(item.owner != user.name){
+            return 'no'
+          }
+        })
+      }</li> */}
+
       </ul>
     })
     return (
