@@ -23,21 +23,31 @@ class App extends Component {
 
   componentDidMount(){
    
+  
     // axios.get('http://localhost:3000')
+    // .then(res=>{
+    //   this.setState({users:res.data},()=>{
+    //     console.log(this.state.users)
+    //   })
+    // });
+
+    // axios.get('http://localhost:3000/list')
     // .then(res=>{
     //   this.setState({list:res.data},()=>{
     //     console.log(this.state.list)
     //   })
     // });
+    
 
-    axios.get('http://localhost:3000')
+
+    axios.get('https://todo-list-test-project.herokuapp.com/')
     .then(res=>{
       this.setState({users:res.data},()=>{
         console.log(this.state.users)
       })
     });
 
-    axios.get('http://localhost:3000/list')
+    axios.get('https://todo-list-test-project.herokuapp.com/')
     .then(res=>{
       this.setState({list:res.data},()=>{
         console.log(this.state.list)
