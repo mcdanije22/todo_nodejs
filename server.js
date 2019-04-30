@@ -7,15 +7,25 @@ const list = require('./routes/list');
 const add = require('./routes/add');
 const del = require('./routes/del');
 const userList = require('./routes/userList');
+
+// const db = Knex({
+//     client: 'pg',
+//     connection: {
+//       host : '127.0.0.1',
+//       user : 'joshmcdaniel',
+//       password : '',
+//       database : 'todo_list'
+//     }
+//   });
+
 const db = Knex({
-    client: 'pg',
-    connection: {
-      host : '127.0.0.1',
-      user : 'joshmcdaniel',
-      password : '',
-      database : 'todo_list'
-    }
-  });
+  client: 'pg',
+  connection: {
+    connectionString : process.env.DATABASE_URL,
+    ssl:true
+    
+  }
+});
 
 
 const port = process.env.PORT || 3000;
