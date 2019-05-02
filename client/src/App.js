@@ -47,7 +47,7 @@ class App extends Component {
       })
     });
 
-    axios.get('https://todo-list-test-project.herokuapp.com/')
+    axios.get('https://todo-list-test-project.herokuapp.com/list')
     .then(res=>{
       this.setState({list:res.data},()=>{
         console.log(this.state.list)
@@ -73,7 +73,7 @@ class App extends Component {
     if(itemInput ==='' || descriptionInput === '' || ownerInput ===''){
       alert('input all fields')
     } else{
-    axios.post('http://localhost:3000/add',{
+    axios.post('https://todo-list-test-project.herokuapp.com/add',{
         item:itemInput,
         description:descriptionInput,
         owner:ownerInput
@@ -129,7 +129,7 @@ class App extends Component {
   onDelete=(e)=>{
     const id = e.target.id;
     console.log(id);
-    axios.delete(`http://localhost:3000/delete/ ${id}`) 
+    axios.delete(`https://todo-list-test-project.herokuapp.com/delete/ ${id}`) 
     const list = this.state.list;
     const newList = list.filter(item => item.id != id);
     this.setState({list:newList})
